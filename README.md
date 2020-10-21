@@ -1,7 +1,7 @@
-# eeri325-prac
-EERI 325 Practical - Frequency analysis and Manipulation of discrete signals
-Must convert a 1-d sound signal to its frequency domain and perform filtering of the signal
-Must convert a 2-d image signal to its frequency domain and perform filtering of the signal
+# EERI 325 Practical
+## EERI 325 Practical - Frequency analysis and Manipulation of discrete signals
+Must convert a 1-d sound signal to its frequency domain and perform filtering of the signal  
+The same must then be done for a greyscale image
 
 # Requirements
 ## 1-D (audio wave)
