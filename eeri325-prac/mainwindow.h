@@ -17,5 +17,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void MakePlot();
 };
 #endif // MAINWINDOW_H

@@ -13,12 +13,12 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+  <widget class="QWidget" name="widgetMain">
+   <widget class="QTabWidget" name="tab">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>9</y>
+      <y>10</y>
       <width>1241</width>
       <height>621</height>
      </rect>
@@ -30,6 +30,16 @@
      <attribute name="title">
       <string>Sound</string>
      </attribute>
+     <widget class="QCustomPlot" name="customPlot" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>681</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_Image">
      <attribute name="title">
@@ -50,6 +60,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header location="global">qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
