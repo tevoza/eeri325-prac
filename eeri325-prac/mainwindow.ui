@@ -6,59 +6,242 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1278</width>
-    <height>669</height>
+    <width>1328</width>
+    <height>1122</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="widgetMain">
-   <widget class="QTabWidget" name="tab">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>1241</width>
-      <height>621</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab_Sound">
-     <attribute name="title">
-      <string>Sound</string>
-     </attribute>
-     <widget class="QCustomPlot" name="customPlot" native="true">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>681</width>
-        <height>271</height>
-       </rect>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
+      <widget class="QWidget" name="tabSound">
+       <attribute name="title">
+        <string>Sound</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QWidget" name="wOrig" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0" colspan="2">
+            <widget class="QWidget" name="orgLblInfo_2" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="orgLblInfo">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>ORIGINAL SIGNAL</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="orgBtnUpdate">
+                <property name="text">
+                 <string>Update Inputs</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="orgCmbInput">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string notr="true">Input</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Input</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="orgBtnPlay">
+                <property name="text">
+                 <string>Play</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="orgCmbFourier">
+                <property name="currentIndex">
+                 <number>-1</number>
+                </property>
+                <property name="placeholderText">
+                 <string>Magnitude Spectrum</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCustomPlot" name="orgPlotFreq" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>6</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCustomPlot" name="orgPlotTime" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>10</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="wFilter" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0" colspan="2">
+            <widget class="QWidget" name="Info_2" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>1</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="lblInfo_2">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>FILTERED SIGNAL</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbSound_2">
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cmbFourier_2"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QCustomPlot" name="widgetTime_2" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>10</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCustomPlot" name="widgetFreq_2" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>6</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabImage">
+       <attribute name="title">
+        <string>Image</string>
+       </attribute>
+      </widget>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_Image">
-     <attribute name="title">
-      <string>Image</string>
-     </attribute>
-    </widget>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1278</width>
-     <height>28</height>
+     <width>1328</width>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuUpdate_Sources">
+    <property name="title">
+     <string>Input</string>
+    </property>
+   </widget>
+   <addaction name="menuUpdate_Sources"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionUpdate_Sound_Inputs_wav">
+   <property name="text">
+    <string>Update Sound Inputs(wav)</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
