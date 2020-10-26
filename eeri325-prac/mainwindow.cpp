@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     //Connect signals and slots
     connect(ui->orgBtnUpdate, SIGNAL(clicked()), this, SLOT(updateSoundFiles()));
     connect(ui->orgBtnPlay, SIGNAL(clicked()), this, SLOT(playOrgSound()));
+    connect(ui->orgCmbInput, SIGNAL(currentIndexChanged(QString)), this, SLOT(decodeOrgSound()));
+    connect(ui->orgBtnPlot, SIGNAL(clicked()), this, SLOT(plotOrgTimePlot()));
 
 }
 
@@ -64,23 +66,62 @@ void MainWindow::playOrgSound()
     }
 }
 
-void MainWindow::MakePlot()
+void MainWindow::decodeOrgSound()
 {
-    // generate some data:
-    QVector<double> x(101), y(101); // initialize with entries 0..100
-    for (int i=0; i<101; ++i)
-    {
-      x[i] = i/50.0 - 1; // x goes from -1 to 1
-      y[i] = x[i]*x[i]; // let's plot a quadratic function
+    if (QFile::exists(ui->orgCmbInput->currentText())){
+        QAudioFormat desiredFormat;
+        desiredFormat.setChannelCount(2);
+        desiredFormat.setCodec("audio/x-wav");
+        desiredFormat.setSampleType(QAudioFormat::SignedInt);
+        desiredFormat.setSampleRate(44100);
+        desiredFormat.setSampleSize(16);
+
+        decoder = new QAudioDecoder(this);
+        decoder->setAudioFormat(desiredFormat);
+        decoder->setSourceFilename("/home/adam/drive/Projects/eeri325-prac/build-eeri325-prac-Desktop-Debug/res/500sine.wav");
+
+        connect(decoder, SIGNAL(bufferReady()), this, SLOT(readBuffer()));
+        decoder->start();
     }
+    else {
+        qDebug() << "plotOrgSound: File does not exist";
+    }
+}
+
+void MainWindow::readBuffer()
+{
+    QAudioBuffer buffer = decoder->read();
+    const qint16 *data = buffer.data<qint16>();
+    for (int k = 0; k < buffer.sampleCount(); k++)
+    {
+           orgSoundSignal.append((double)(*(data+k)));
+    }
+    qDebug() << "Buffer Increased to size " << orgSoundSignal.size();
+}
+
+void MainWindow::plotOrgTimePlot()
+{
+    ui->orgPlotTime->setInteraction(QCP::iRangeDrag, true);
+    ui->orgPlotTime->setInteraction(QCP::iRangeZoom, true);
+    //ui->orgPlotTime->axisRect()->setRangeZoomAxes(Qt::Vertical | Qt::Horizontal);
+    // generate some data:
+    QVector<double> x; // initialize entries
+
+    double max = 0;
+    for (int k = 0; k < orgSoundSignal.size(); k++) {
+        x.append(k);
+        if (orgSoundSignal[k] > max)
+            max = orgSoundSignal[k];
+    }
+
     // create graph and assign data to it:
     ui->orgPlotTime->addGraph();
-    ui->orgPlotTime->graph(0)->setData(x, y);
+    ui->orgPlotTime->graph(0)->setData(x, orgSoundSignal);
     // give the axes some labels:
     ui->orgPlotTime->xAxis->setLabel("time");
     ui->orgPlotTime->yAxis->setLabel("Magnitude");
     // set axes ranges, so we see all data:
-    ui->orgPlotTime->xAxis->setRange(-1, 1);
-    ui->orgPlotTime->yAxis->setRange(0, 1);
+    ui->orgPlotTime->xAxis->setRange(0, x.size());
+    ui->orgPlotTime->yAxis->setRange(-max, max);
     ui->orgPlotTime->replot();
 }

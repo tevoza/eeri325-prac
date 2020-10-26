@@ -103,6 +103,13 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QPushButton" name="orgBtnPlot">
+                <property name="text">
+                 <string>Plot</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
