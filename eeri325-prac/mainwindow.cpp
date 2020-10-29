@@ -68,7 +68,11 @@ void MainWindow::playOrgSound()
 
 void MainWindow::decodeOrgSound()
 {
-    if (QFile::exists(ui->orgCmbInput->currentText())){
+    if (QFile::exists(ui->orgCmbInput->currentText()))
+    {
+        QFileInfo source(ui->orgCmbInput->currentText());
+        qDebug() << (source.absoluteFilePath());
+
         QAudioFormat desiredFormat;
         desiredFormat.setChannelCount(2);
         desiredFormat.setCodec("audio/x-wav");
@@ -78,7 +82,7 @@ void MainWindow::decodeOrgSound()
 
         decoder = new QAudioDecoder(this);
         decoder->setAudioFormat(desiredFormat);
-        decoder->setSourceFilename("/home/adam/drive/Projects/eeri325-prac/build-eeri325-prac-Desktop-Debug/res/500sine.wav");
+        decoder->setSourceFilename(source.absoluteFilePath());
 
         connect(decoder, SIGNAL(bufferReady()), this, SLOT(readBuffer()));
         decoder->start();
@@ -121,7 +125,7 @@ void MainWindow::plotOrgTimePlot()
     ui->orgPlotTime->xAxis->setLabel("time");
     ui->orgPlotTime->yAxis->setLabel("Magnitude");
     // set axes ranges, so we see all data:
-    ui->orgPlotTime->xAxis->setRange(0, x.size());
+    ui->orgPlotTime->xAxis->setRange(5000, 6000);
     ui->orgPlotTime->yAxis->setRange(-max, max);
     ui->orgPlotTime->replot();
 }
