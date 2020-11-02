@@ -7,6 +7,7 @@
 #include <QAudioDecoder>
 #include <QAudioDeviceInfo>
 #include <QtGlobal>
+#include "mysignalprocessing.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,6 +31,7 @@ public:
     void decodeOrgSound();
     void readBuffer();
     void plotOrgTimePlot();
+    void testfft();
 
 private:
     Ui::MainWindow *ui;

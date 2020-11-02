@@ -128,4 +128,52 @@ void MainWindow::plotOrgTimePlot()
     ui->orgPlotTime->xAxis->setRange(5000, 6000);
     ui->orgPlotTime->yAxis->setRange(-max, max);
     ui->orgPlotTime->replot();
+
+    testfft();
+}
+
+void MainWindow::testfft()
+{
+    //test signal
+    vector<complex<double>> samples;
+
+    qDebug() << "samples:";
+    int sampleFreq = 4;
+
+    complex<double> sample;
+    for (int i = 0; i < 8; i++){
+        sample = complex<double>(sin(1.5*i*(M_PI/2)), 0.0);
+        samples.push_back(sample);
+        qDebug() << real(samples[i]) << "+j(" << imag(samples[i]) << "), ";
+    }
+
+    vector<complex<double>> bins = myfft(samples);
+    QVector<double> mag = myMagSpectrum(bins);
+
+
+
+    //plot this hopefully
+    ui->orgPlotFreq->setInteraction(QCP::iRangeDrag, true);
+    ui->orgPlotFreq->setInteraction(QCP::iRangeZoom, true);
+    //ui->orgPlotFreq->axisRect()->setRangeZoomAxes(Qt::Vertical | Qt::Horizontal);
+    // generate some data:
+    QVector<double> x; // initialize entries
+
+    double max = 0;
+    for (int k = 0; k <mag.size(); k++){
+        x.append(k);
+        if (mag[k]>max)
+            max = mag[k];
+    }
+
+    // create graph and assign data to it:
+    ui->orgPlotFreq->addGraph();
+    ui->orgPlotFreq->graph(0)->setData(x, mag);
+    // give the axes some labels:
+    ui->orgPlotFreq->xAxis->setLabel("Frequency");
+    ui->orgPlotFreq->yAxis->setLabel("Magnitude");
+    // set axes ranges, so we see all data:
+    ui->orgPlotFreq->xAxis->setRange(0, x.size());
+    ui->orgPlotFreq->yAxis->setRange(0, max);
+    ui->orgPlotFreq->replot();
 }

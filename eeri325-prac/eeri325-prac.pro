@@ -11,10 +11,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    mysignalprocessing.cpp \
     qcustomplot.cpp
 
 HEADERS += \
     mainwindow.h \
+    mysignalprocessing.h \
     qcustomplot.h
 
 FORMS += \
