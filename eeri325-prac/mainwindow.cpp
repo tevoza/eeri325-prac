@@ -138,16 +138,20 @@ void MainWindow::testfft()
     vector<complex<double>> samples;
 
     qDebug() << "samples:";
-    int sampleFreq = 4;
+    int sampleFreq = 8;
 
     complex<double> sample;
-    for (int i = 0; i < 8; i++){
-        sample = complex<double>(sin(1.5*i*(M_PI/2)), 0.0);
+    for (int i = 0; i < 16; i++){
+        sample = complex<double>(sin(1*i*(M_PI/4)), 0.0);
         samples.push_back(sample);
         qDebug() << real(samples[i]) << "+j(" << imag(samples[i]) << "), ";
     }
 
-    vector<complex<double>> bins = myfft(samples);
+    qDebug() << "FFT";
+    vector<complex<double>> bins = MyFFT(samples);
+    for (int i=0; i<bins.size() ; i++)
+        qDebug() << real(bins[i]) << "+j(" << imag(bins[i]) << "), ";
+
     QVector<double> mag = myMagSpectrum(bins);
 
 

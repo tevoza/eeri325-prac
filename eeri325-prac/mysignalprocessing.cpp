@@ -5,6 +5,43 @@ mySignalProcessing::mySignalProcessing()
 
 }
 
+//return a vector of frequency bins
+vector<complex<double>> MyFFT(vector<complex<double>> &samples)
+{
+    int N = samples.size();
+
+    if (N == 1) { return samples;}  //return self at bottom of recursion
+
+    //split into even and odd sub samples
+    int M = N/2;
+    qDebug() << M;
+    vector<complex<double>> xEven(M,0);
+    vector<complex<double>> xOdd(M,0);
+    for(int i =0; i<M; i++){
+        xEven[i] = samples[2*i];
+        xOdd[i] = samples[2*i+1];
+    }
+
+    //recursive call on smaller sets
+    vector<complex<double>> FEven(M,0);
+    vector<complex<double>> FOdd(M,0);
+    FEven = MyFFT(FEven);
+    FOdd = MyFFT(FOdd);
+
+    //End of recursion, now combine
+    vector<complex<double>> freqBins(N,0);
+    complex<double> oddcmp;
+    for(int k=0 ; k < N/2; k++)
+    {
+        oddcmp = polar(1.0, (-2*M_PI*k)/N)*FOdd[k];
+        freqBins[k] = FEven[k] + oddcmp;
+        freqBins[k+N/2] = FEven[k] - oddcmp;
+    }
+
+    qDebug() << "returned";
+    return freqBins;
+}
+
 //return the k-th freq bin
 complex<double> myfftbin(int k, vector<complex<double>> &samples)
 {
