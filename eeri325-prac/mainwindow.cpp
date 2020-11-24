@@ -21,13 +21,14 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << InputImage->height();
     qDebug() << InputImage->isGrayscale();
     QPoint p(3000, 4000);
-    QRgba64 color = (1, 1, 1);
+    QRgb color = qRgb(1, 1, 1);
 
     for(int i = InputImage->width()/2; i < InputImage->width(); i++)
         for(int j = InputImage->height()/2; j < InputImage->height(); j++)
         {
             InputImage->setPixel(i,j,color);
         }
+
     qDebug() << InputImage->pixelColor(p);
 
 
@@ -101,7 +102,11 @@ void MainWindow::decodeOrgSound()
     if (QFile::exists(ui->orgCmbInput->currentText()))
     {
         QFileInfo source(ui->orgCmbInput->currentText());
-        qDebug() << (source.absoluteFilePath());
+        QMediaResource info = QMediaResource(source.absoluteFilePath());
+        qDebug() << (info.sampleRate());
+        qDebug() << (info.isNull());
+        qDebug() << (info.url());
+        qDebug() << (info.audioCodec());
 
         QAudioFormat desiredFormat;
         desiredFormat.setChannelCount(2);

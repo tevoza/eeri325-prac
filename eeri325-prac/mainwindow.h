@@ -6,6 +6,7 @@
 #include <QSound>
 #include <QAudioDecoder>
 #include <QAudioDeviceInfo>
+#include <QMediaResource>
 #include <QtGlobal>
 #include <QPoint>
 #include <QColor>
