@@ -1,4 +1,7 @@
 #include "mainwindow.h"
+#include "mainwindow.h"
+#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -11,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->orgBtnUpdate, SIGNAL(clicked()), this, SLOT(updateSoundFiles()));
     connect(ui->orgBtnPlay, SIGNAL(clicked()), this, SLOT(playOrgSound()));
     connect(ui->orgCmbInput, SIGNAL(currentIndexChanged(QString)), this, SLOT(decodeOrgSound()));
-    connect(ui->orgBtnPlot, SIGNAL(clicked()), this, SLOT(plotOrgTimePlot()));
+   // connect(ui->orgBtnPlot, SIGNAL(clicked()), this, SLOT(plotOrgTimePlot()));
 
     //image stuffs
     InputImage = new QImage("res/original.jpg");
@@ -21,15 +24,14 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << InputImage->height();
     qDebug() << InputImage->isGrayscale();
     QPoint p(3000, 4000);
-    QRgb color = qRgb(1, 1, 1);
+    QRgb color = qRgb(122, 122, 122);
 
     for(int i = InputImage->width()/2; i < InputImage->width(); i++)
         for(int j = InputImage->height()/2; j < InputImage->height(); j++)
         {
             InputImage->setPixel(i,j,color);
         }
-
-    qDebug() << InputImage->pixelColor(p);
+    inputImg = saveImage(InputImage);
 
 
     ui->picOriginal->setPixmap(QPixmap::fromImage(*InputImage));
@@ -40,6 +42,37 @@ MainWindow::~MainWindow()
     delete ui;
     delete orgSound;
 }
+vector<vector<int>> MainWindow::saveImage(QImage *Image)
+{
+    //loop through image
+    vector<vector<int>> res(Image->width());
+    for(int i=0; i<Image->width(); i++){
+        res[i] = vector<int>(Image->height());
+        for(int j=0; i<Image->height(); i++)
+        {
+            res[i][j] = Image->pixelColor(i, j).blue();
+        }
+    }
+    return res;
+}
+
+QImage *MainWindow::setImage(vector<vector<int> > &ImgVec)
+{
+    QImage *Img = new QImage(ImgVec.size(), ImgVec[0].size(), QImage::Format_Grayscale16);
+    for(int i=0; i<ImgVec.size(); i++){
+        for(int j=0; i<ImgVec[i].size(); i++)
+        {
+            Img->setPixel(i,j,ImgVec[i][j]);
+        }
+    }
+    return Img;
+}
+
+void MainWindow::processImage()
+{
+    qDebug() << "hi";
+}
+
 
 //convert real vector to complex vector
 vector<complex<double>> MainWindow::toComplex(QVector<double> &signal)
@@ -292,3 +325,8 @@ void MainWindow::filfft()
 //        samples.push_back(sample);
 //        qDebug() << real(samples[i]) << "+j(" << imag(samples[i]) << "), ";
 //    }
+
+void MainWindow::on_orgBtnPlot_clicked()
+{
+
+}

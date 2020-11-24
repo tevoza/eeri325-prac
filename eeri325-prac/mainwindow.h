@@ -34,10 +34,16 @@ public:
 
     //images
     QImage *InputImage;
+    vector<vector<int>> inputImg;
 
     vector<complex<double>> toComplex(QVector<double> &signal);
 
+
+    vector<vector<int>> saveImage(QImage *Image);
+    QImage *setImage(vector<vector<int>> &ImgVec);
+
     public slots:
+    void processImage();
     void updateSoundFiles();
     void playOrgSound();
     void decodeOrgSound();
