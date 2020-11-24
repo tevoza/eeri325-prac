@@ -14,7 +14,6 @@ vector<complex<double>> MyFFT(vector<complex<double>> &samples)
 
     //split into even and odd sub samples
     int M = N/2;
-    qDebug() << M;
     vector<complex<double>> xEven(M,0);
     vector<complex<double>> xOdd(M,0);
     for(int i =0; i<M; i++){
@@ -25,8 +24,8 @@ vector<complex<double>> MyFFT(vector<complex<double>> &samples)
     //recursive call on smaller sets
     vector<complex<double>> FEven(M,0);
     vector<complex<double>> FOdd(M,0);
-    FEven = MyFFT(FEven);
-    FOdd = MyFFT(FOdd);
+    FEven = MyFFT(xEven);
+    FOdd = MyFFT(xOdd);
 
     //End of recursion, now combine
     vector<complex<double>> freqBins(N,0);
@@ -38,7 +37,6 @@ vector<complex<double>> MyFFT(vector<complex<double>> &samples)
         freqBins[k+N/2] = FEven[k] - oddcmp;
     }
 
-    qDebug() << "returned";
     return freqBins;
 }
 
@@ -89,4 +87,14 @@ QVector<double> myMagSpectrum(vector<complex<double>> &freqBins)
         MagSpec.push_back(abs(freqBins[k]));
     }
     return MagSpec;
+}
+
+QVector<double> My4kLPF(QVector<double> &samples)
+{
+    QVector<double> Filtered(samples.size());
+    for (int i=2; i<samples.size(); i++)
+    {
+        Filtered[i] = 0.17724*samples[i] + 0.35449*samples[i-1] + 0.17724*samples[i-2] + 0.50872*Filtered[i-1] - 0.2177*Filtered[i-2];
+    }
+    return Filtered;
 }

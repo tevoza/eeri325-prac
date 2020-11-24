@@ -20,6 +20,7 @@ public:
 
 using namespace std;
 vector<complex<double>> MyFFT(vector<complex<double>> &samples);
+QVector<double> My4kLPF(QVector<double> &samples);
 complex<double> myfftbin(int k, vector<complex<double>> &samples);
 vector<complex<double>> myfft(vector<complex<double>> &samples);
 QVector<double> myMagSpectrum(vector<complex<double>> &freqBins);

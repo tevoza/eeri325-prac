@@ -7,6 +7,8 @@
 #include <QAudioDecoder>
 #include <QAudioDeviceInfo>
 #include <QtGlobal>
+#include <QPoint>
+#include <QColor>
 #include "mysignalprocessing.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +26,15 @@ public:
     QSound *orgSound;
     QAudioDecoder *decoder;
     QVector <double> orgSoundSignal;
+    QVector <double> filteredSoundSignal;
+    vector <complex<double>> cmpOrgSoundSignal;
+    vector <complex<double>> cmpfilteredSignal;
+    double sampleFreq;
+
+    //images
+    QImage *InputImage;
+
+    vector<complex<double>> toComplex(QVector<double> &signal);
 
     public slots:
     void updateSoundFiles();
@@ -31,7 +42,12 @@ public:
     void decodeOrgSound();
     void readBuffer();
     void plotOrgTimePlot();
+    void plotFilteredSignal();
     void testfft();
+    void filfft();
+
+private slots:
+    void on_orgBtnPlot_clicked();
 
 private:
     Ui::MainWindow *ui;
