@@ -1,4 +1,7 @@
 #include "mainwindow.h"
+#include "mainwindow.h"
+#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -10,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Connect signals and slots
     connect(ui->orgBtnUpdate, SIGNAL(clicked()), this, SLOT(updateSoundFiles()));
     connect(ui->orgBtnPlay, SIGNAL(clicked()), this, SLOT(playOrgSound()));
+
     //connect(ui->orgCmbInput, SIGNAL(currentIndexChanged(QString)), this, SLOT(decodeOrgSound()));
     connect(ui->orgBtnPlot, SIGNAL(clicked()), this, SLOT(plotOrgTimePlot()));
     connect(ui->btnTransform, SIGNAL(clicked()), this, SLOT(process2d()));
@@ -47,6 +51,37 @@ MainWindow::~MainWindow()
     delete ui;
     delete orgSound;
 }
+vector<vector<int>> MainWindow::saveImage(QImage *Image)
+{
+    //loop through image
+    vector<vector<int>> res(Image->width());
+    for(int i=0; i<Image->width(); i++){
+        res[i] = vector<int>(Image->height());
+        for(int j=0; i<Image->height(); i++)
+        {
+            res[i][j] = Image->pixelColor(i, j).blue();
+        }
+    }
+    return res;
+}
+
+QImage *MainWindow::setImage(vector<vector<int> > &ImgVec)
+{
+    QImage *Img = new QImage(ImgVec.size(), ImgVec[0].size(), QImage::Format_Grayscale16);
+    for(int i=0; i<ImgVec.size(); i++){
+        for(int j=0; i<ImgVec[i].size(); i++)
+        {
+            Img->setPixel(i,j,ImgVec[i][j]);
+        }
+    }
+    return Img;
+}
+
+void MainWindow::processImage()
+{
+    qDebug() << "hi";
+}
+
 
 vector<vector<int>> MainWindow::saveImage(QImage &Image)
 {
@@ -512,5 +547,4 @@ void MainWindow::filfft()
         case 2:	plotInv();
                 break;
     }
-
 }

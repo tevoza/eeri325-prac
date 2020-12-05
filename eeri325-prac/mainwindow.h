@@ -49,6 +49,10 @@ public:
 
     vector<complex<double>> toComplex(QVector<double> &signal);
 
+
+    vector<vector<int>> saveImage(QImage *Image);
+    QImage *setImage(vector<vector<int>> &ImgVec);
+
     public slots:
     void process2d();
     void processImage();
