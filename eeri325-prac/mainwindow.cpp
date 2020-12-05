@@ -31,14 +31,14 @@ MainWindow::MainWindow(QWidget *parent)
 //        {
 //            InputImage->setPixel(i,j,color);
 //        }
-
-    vecInputImage  = saveImage(*InputImage);
-    qDebug() << vecInputImage.size();
-    qDebug() << vecInputImage[0].size();
-    *InputImage = setImage(vecInputImage);
-
-    ui->picOriginal->setPixmap(QPixmap::fromImage(*InputImage));
-
+//
+//    vecInputImage  = saveImage(*InputImage);
+//    qDebug() << vecInputImage.size();
+//    qDebug() << vecInputImage[0].size();
+//    *InputImage = setImage(vecInputImage);
+//
+//    ui->picOriginal->setPixmap(QPixmap::fromImage(*InputImage));
+//
     decodeOrgSound();
 }
 
