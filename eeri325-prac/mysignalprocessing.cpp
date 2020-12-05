@@ -5,8 +5,7 @@ mySignalProcessing::mySignalProcessing()
 
 }
 
-//return a vector of frequency bins
-vector<complex<double>> MyFFT(vector<complex<double>> &samples)
+vector<complex<double> > MyFFT(vector<complex<double> > &samples)
 {
     int N = samples.size();
 
@@ -40,46 +39,8 @@ vector<complex<double>> MyFFT(vector<complex<double>> &samples)
     return freqBins;
 }
 
-//return the k-th freq bin
-complex<double> myfftbin(int k, vector<complex<double>> &samples)
-{
-    int N = samples.size();
 
-    //return self for bottom level recursion
-    if(N == 1){
-        complex<double> cmp(1.0, 0.0);
-        return cmp*samples[0];
-    }
-
-    //split even and odd components
-    vector<complex<double>> evens;
-    vector<complex<double>> odds;
-    for (int i = 0; i<samples.size(); i++){
-        if (i % 2 == 0){
-            evens.push_back(samples[i]);
-        } else {
-            odds.push_back(samples[i]);
-        }
-    }
-
-    //recursive call on smaller sets
-    complex<double> oddcmp = polar(1.0, (-2*M_PI*k)/N);
-    complex<double> res = myfftbin(k, evens) + oddcmp*myfftbin(k, odds);
-
-    return res;
-}
-
-//return a vector of frequency bins
-vector<complex<double>> myfft(vector<complex<double>> &samples)
-{
-    vector<complex<double>> bins;
-    for(unsigned int k = 0; k<samples.size(); k++){
-        bins.push_back(myfftbin(k, samples));
-    }
-    return bins;
-}
-
-QVector<double> myMagSpectrum(vector<complex<double>> &freqBins)
+QVector<double> myMagSpectrum(vector<complex<double> > &freqBins)
 {
     QVector<double> MagSpec;
     for (unsigned int k = 0; k<freqBins.size(); k++)
@@ -97,4 +58,74 @@ QVector<double> My4kLPF(QVector<double> &samples)
         Filtered[i] = 0.17724*samples[i] + 0.35449*samples[i-1] + 0.17724*samples[i-2] + 0.50872*Filtered[i-1] - 0.2177*Filtered[i-2];
     }
     return Filtered;
+}
+
+void ftw_test_1d(int N, fftw_complex *input, fftw_complex *output)
+{
+    fftw_plan my_plan = fftw_plan_dft_1d(N, input, output, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_execute(my_plan);
+
+    fftw_destroy_plan(my_plan);
+    fftw_cleanup();
+    return;
+}
+
+void ftw_run()
+{
+    int N = 8;
+    fftw_complex in[N];
+    fftw_complex out[N];
+
+    for(int i = 0; i < N; i++){
+        in[i][REAL] = sin(2.0*(M_PI/4));
+        in[i][IMAG] = 0;
+    }
+
+   ftw_test_1d(N, in, out);
+
+   for(int i = 0; i < N; i++){
+       qDebug() << out[i][REAL] << " +j" << out[i][IMAG];
+   }
+
+}
+
+QVector<double> myPhaseSpectrum(vector<complex<double>> &freqBins)
+{
+    QVector<double> PhaseSpec;
+    for (unsigned int k =0; k < freqBins.size(); k++)
+    {
+        PhaseSpec.push_back(arg(freqBins[k]));
+    }
+    return PhaseSpec;
+}
+
+QVector<double> My4kHPF(QVector<double> &samples)
+{
+    QVector<double> Filtered(samples.size());
+    for (int i=2; i<samples.size(); i++)
+    {
+        Filtered[i] = -0.17724*samples[i] + 0.35449*samples[i-1] - 0.17724*samples[i-2] + 0.50872*Filtered[i-1] + 0.2177*Filtered[i-2];
+    }
+    return Filtered;
+
+}
+
+vector<complex<double> > MyInvFFT(vector<complex<double> > &samples)
+{
+    int N = samples.size();
+    vector<complex<double>> con;
+    vector<complex<double>> res;
+
+    //find the samples conjugate
+    for(int i = 0; i < samples.size(); i++)
+        con.push_back(conj(samples[i]));
+
+    res = MyFFT(con);
+
+    for(int i = 0; i < res.size(); i++)
+    {
+        res[i] = (conj(res[i]))/double(N);
+    }
+
+    return res;
 }

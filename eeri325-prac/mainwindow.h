@@ -11,6 +11,7 @@
 #include <QPoint>
 #include <QColor>
 #include "mysignalprocessing.h"
+#include <fftw3.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,15 +27,25 @@ public:
 
     QSound *orgSound;
     QAudioDecoder *decoder;
-    QVector <double> orgSoundSignal;
-    QVector <double> filteredSoundSignal;
-    vector <complex<double>> cmpOrgSoundSignal;
-    vector <complex<double>> cmpfilteredSignal;
+
     double sampleFreq;
+    //original signal
+    QVector <double> orgSoundSignal;
+    vector <complex<double>> cmpOrgSoundSignal;
+    vector <complex<double>> bins; //orgininal fft output
+
+
+    //filtered signal
+    QVector <double> filteredSoundSignal;
+    vector <complex<double>> cmpfilteredSignal;
+    vector <complex<double>> filteredfft;
+    vector <complex<double>> invfft;
 
     //images
     QImage *InputImage;
-    vector<vector<int>> inputImg;
+    vector<vector<int>> vecInputImage;
+    vector<vector<int>> saveImage(QImage &Image);
+    QImage setImage(vector<vector<int> > &ImgVec);
 
     vector<complex<double>> toComplex(QVector<double> &signal);
 
@@ -43,21 +54,26 @@ public:
     QImage *setImage(vector<vector<int>> &ImgVec);
 
     public slots:
+    void process2d();
     void processImage();
     void updateSoundFiles();
     void playOrgSound();
     void decodeOrgSound();
     void readBuffer();
+    //original signal
     void plotOrgTimePlot();
-    void plotFilteredSignal();
+    void plotOrgMagSpec();
+    void plotOrgPhaseSpec();
     void testfft();
-    void filfft();
 
-private slots:
-    void on_orgBtnPlot_clicked();
+    //filtered signal
+    void plotFilteredSignal();
+    void plotFilteredMag();
+    void plotFilteredPhase();
+    void plotInv();
+    void filfft();
 
 private:
     Ui::MainWindow *ui;
-
 };
 #endif // MAINWINDOW_H

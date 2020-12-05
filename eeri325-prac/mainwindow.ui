@@ -68,6 +68,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="orgBtnUpdate">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Update Inputs</string>
                 </property>
@@ -75,6 +78,9 @@
               </item>
               <item>
                <widget class="QComboBox" name="orgCmbInput">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="editable">
                  <bool>false</bool>
                 </property>
@@ -88,6 +94,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="orgBtnPlay">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="text">
                  <string>Play</string>
                 </property>
@@ -101,6 +110,16 @@
                 <property name="placeholderText">
                  <string>Magnitude Spectrum</string>
                 </property>
+                <item>
+                 <property name="text">
+                  <string>Phase Spectrum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Magnitude Spectrum</string>
+                 </property>
+                </item>
                </widget>
               </item>
               <item>
@@ -178,22 +197,50 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="cmbSound_2">
+               <widget class="QComboBox" name="filCmb">
                 <property name="editable">
                  <bool>false</bool>
                 </property>
                 <property name="currentText">
-                 <string>4kLPF</string>
+                 <string>4KLowPass</string>
                 </property>
                 <item>
                  <property name="text">
-                  <string>4kLPF</string>
+                  <string>4KLowPass</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>4KHighPass</string>
                  </property>
                 </item>
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="cmbFourier_2"/>
+               <widget class="QPushButton" name="filBtnplot">
+                <property name="text">
+                 <string>Plot</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="filFFTcmb">
+                <item>
+                 <property name="text">
+                  <string>Magnitude Spectrum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Phase Spectrum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Inverse DFT</string>
+                 </property>
+                </item>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -227,33 +274,30 @@
        <attribute name="title">
         <string>Image</string>
        </attribute>
-       <widget class="QWidget" name="widget" native="true">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>1281</width>
-          <height>61</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
        <widget class="QLabel" name="picOriginal">
         <property name="geometry">
          <rect>
-          <x>40</x>
-          <y>90</y>
-          <width>501</width>
-          <height>331</height>
+          <x>20</x>
+          <y>50</y>
+          <width>711</width>
+          <height>511</height>
          </rect>
         </property>
         <property name="text">
          <string>TextLabel</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnTransform">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>transform</string>
         </property>
        </widget>
       </widget>
